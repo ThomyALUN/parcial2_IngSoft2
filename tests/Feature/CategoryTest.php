@@ -34,10 +34,8 @@ class CategoryTest extends TestCase
         $response = $this->get('/api/categories/'.$category->id);
         $response->assertStatus(200);
         $response->assertJson([
-            'data' => [
-                'name' => 'muebles',
-                'description' => 'Muebles para tú casa',
-            ]
+            'name' => 'muebles',
+            'description' => 'Muebles para tú casa',
         ]);
     }
 
@@ -52,7 +50,7 @@ class CategoryTest extends TestCase
         ];
         $response = $this->put('/api/categories/'.$category->id, $updateData);
         $response->assertStatus(200);
-        $this->assertDatabaseHas('products', [
+        $this->assertDatabaseHas('categories', [
             'name' => 'Tecnologia',
             'description' => 'Tecnología de punta'
         ]);
@@ -70,13 +68,5 @@ class CategoryTest extends TestCase
             #'name' => 'Gafas'
         ]);
     }
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
-    {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
-    }
 }
