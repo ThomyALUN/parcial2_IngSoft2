@@ -1,0 +1,43 @@
+services:
+  php:
+    container_name: php
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=laravel_app
+      - MYSQL_USER=laravel_app
+      - MYSQL_PASSWORD=laravel_app
+    volumes:
+      - dbdata:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    ports:
+      - "8080:80"
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      - PMA_HOST=mysql 
+      - PMA_PORT=3306
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=laravel_app
+      - MYSQL_USER=laravel_app
+      - MYSQL_PASSWORD=laravel_app
+
+volumes:
+  dbdata:
